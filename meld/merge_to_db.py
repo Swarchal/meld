@@ -121,15 +121,18 @@ class Merger(object):
         for indv_file in file_paths:
             if header == 0 or header == [0]:
                 # dont need to collapse headers
-                tmp_file = pd.read_csv(indv_file, header=0, chunksize=10000,
-                                       iterator=True, **kwargs)
+                tmp_file = pd.read_csv(
+                    indv_file, header=0, chunksize=10000, iterator=True, **kwargs
+                )
                 all_file = pd.concat(tmp_file)
-                all_file.to_sql(table_name, con=self.engine, index=False,
-                                if_exists="append")
+                all_file.to_sql(
+                    table_name, con=self.engine, index=False, if_exists="append"
+                )
             else:
                 # have to collapse columns
-                tmp_file = pd.read_csv(indv_file, header=header, chunksize=10000,
-                                       iterator=True, **kwargs)
+                tmp_file = pd.read_csv(
+                    indv_file, header=header, chunksize=10000, iterator=True, **kwargs
+                )
                 all_file = pd.concat(tmp_file)
                 # collapse column names if multi-indexed
                 if isinstance(all_file.columns, pd.core.index.MultiIndex):
@@ -140,11 +143,19 @@ class Merger(object):
                         + "multi-indexed, try with 'header=0'"
                     )
                 # write to database
-                all_file.to_sql(table_name, con=self.engine, index=False,
-                                if_exists="append")
+                all_file.to_sql(
+                    table_name, con=self.engine, index=False, if_exists="append"
+                )
 
-    def to_db_agg(self, select="DATA", header=0, by="Image_ImageNumber",
-                  method="median", prefix=False, **kwargs):
+    def to_db_agg(
+        self,
+        select="DATA",
+        header=0,
+        by="Image_ImageNumber",
+        method="median",
+        prefix=False,
+        **kwargs
+    ):
         """
         Append files to database table after aggregating replicates.
 
@@ -193,10 +204,10 @@ class Merger(object):
         for indv_file in file_paths:
             if header == 0 or header == [0]:
                 tmp_file = pd.read_csv(indv_file, header=0, **kwargs)
-                tmp_agg = utils.aggregate(tmp_file, on=by, method=method,
-                                          prefix=prefix)
-                tmp_agg.to_sql(table_name, con=self.engine, index=False,
-                               if_exists="append")
+                tmp_agg = utils.aggregate(tmp_file, on=by, method=method, prefix=prefix)
+                tmp_agg.to_sql(
+                    table_name, con=self.engine, index=False, if_exists="append"
+                )
             else:
                 tmp_file = pd.read_csv(indv_file, header=header, **kwargs)
                 # collapse multi-indexed columns
@@ -211,13 +222,21 @@ class Merger(object):
                         "Multiple headers selected, yet dataframe is not "
                         + "multi-indexed, try with 'header=0'"
                     )
-                tmp_agg = utils.aggregate(tmp_file, on=by, method=method,
-                                          **kwargs)
-                tmp_agg.to_sql(table_name, con=self.engine, index=False,
-                               if_exists="append")
+                tmp_agg = utils.aggregate(tmp_file, on=by, method=method, **kwargs)
+                tmp_agg.to_sql(
+                    table_name, con=self.engine, index=False, if_exists="append"
+                )
 
-    def to_csv_agg(self, save_location, select="DATA", header=0, by="Image_ImageNumber",
-                    method="median", prefix=False, **kwargs):
+    def to_csv_agg(
+        self,
+        save_location,
+        select="DATA",
+        header=0,
+        by="Image_ImageNumber",
+        method="median",
+        prefix=False,
+        **kwargs
+    ):
         """
         Bodge to store data in a csv file. Useful if your data contains more
         than 999 columns, which is the maximum number of columns you can
@@ -257,8 +276,7 @@ class Merger(object):
         for indv_file in file_paths:
             if header == 0 or header == [0]:
                 tmp_file = pd.read_csv(indv_file, header=0, **kwargs)
-                tmp_agg = utils.aggregate(tmp_file, on=by, method=method,
-                                          prefix=prefix)
+                tmp_agg = utils.aggregate(tmp_file, on=by, method=method, prefix=prefix)
             else:
                 tmp_file = pd.read_csv(indv_file, header=header, **kwargs)
                 # collapse multi-indexed columns
@@ -273,8 +291,7 @@ class Merger(object):
                         "Multiple headers selected, yet dataframe is not "
                         + "multi-indexed, try with 'header=0'"
                     )
-                tmp_agg = utils.aggregate(tmp_file, on=by, method=method,
-                                          **kwargs)
+                tmp_agg = utils.aggregate(tmp_file, on=by, method=method, **kwargs)
             tmp_files.append(tmp_agg)
         concat_df = pd.concat(tmp_files, copy=False)
         concat_df.to_csv(save_location, index=False)
@@ -326,6 +343,7 @@ class Merger(object):
 
 class HeaderError(Exception):
     """Custom error class"""
+
     pass
 
 
@@ -333,4 +351,5 @@ if sys.version_info.major < 3:
     # running on python2, create NotADirectoryError class
     class NotADirectoryError(Exception):
         """Doesn't exist in python2, create our own"""
+
         pass

@@ -1,6 +1,6 @@
 # meld
 
-**Collate results from Eddie3 cellprofiler jobs**
+**Collate results from distributed cellprofiler jobs**
 
 --------------------------------------------------------------------------------
 

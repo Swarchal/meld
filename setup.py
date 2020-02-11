@@ -14,5 +14,5 @@ setup(
     license="MIT",
     packages=["meld"],
     tests_require=["pytest"],
-    install_requires=read_list("requirements.txt")
+    install_requires=read_list("requirements.txt"),
 )

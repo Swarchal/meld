@@ -42,8 +42,9 @@ def aggregate(data, on, method="median", **kwargs):
     df_metadata.drop_duplicates(subset=on, inplace=True)
     # merge aggregated and feature data
     # FIXME merge by index rather than suffix bodge
-    merged_df = pd.merge(agg, df_metadata, on=on, how="outer",
-                         suffixes=("remove_me", ""))
+    merged_df = pd.merge(
+        agg, df_metadata, on=on, how="outer", suffixes=("remove_me", "")
+    )
     # re-arrange so that the columns are in the original order
     # also doubles to check that no columns are missing or changed names
     merged_df = merged_df[df_cols]
@@ -143,4 +144,3 @@ def get_metadata(data, metadata_string="Metadata", prefix=False):
     elif prefix is False:
         m_cols = [i for i in data.columns if metadata_string in i]
     return m_cols
-
