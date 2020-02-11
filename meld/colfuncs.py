@@ -20,7 +20,6 @@ def inflate_cols(dataframe, sep=" "):
     pandas.MultiIndex
     """
     header_tuples = list(zip(*[col.split(sep) for col in dataframe.columns]))
-    print(pd.DataFrame(header_tuples).T)
     return pd.MultiIndex.from_frame(pd.DataFrame(header_tuples).T)
 
 
