@@ -1,0 +1,8 @@
+Image,Image,Cell,Cell,Nucleus,Nucleus,Metadata
+ImageNumber,Intensity_channel_1,Area,Eccentricity,Area,Eccentricity,Well
+1,0.3,10,0.5,2,0.2,A03
+1,0.2,10,0.5,2,0.2,A03
+1,0.1,10,0.5,2,0.2,A03
+2,0.5,20,0.5,3,0.2,A03
+2,0.4,20,0.5,3,0.2,A03
+2,0.5,30,0.5,3,0.2,A03
