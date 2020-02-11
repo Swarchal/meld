@@ -19,8 +19,9 @@ def inflate_cols(dataframe, sep=" "):
     --------
     pandas.MultiIndex
     """
-    header_tuples = zip(*[col.split(sep) for col in dataframe.columns])
-    return pd.MultiIndex.from_tuples(list(header_tuples))
+    header_tuples = list(zip(*[col.split(sep) for col in dataframe.columns]))
+    print(pd.DataFrame(header_tuples).T)
+    return pd.MultiIndex.from_frame(pd.DataFrame(header_tuples).T)
 
 
 def collapse_cols(dataframe, sep="_"):
