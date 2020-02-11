@@ -4,6 +4,11 @@ tests for meld.colfuncs
 
 import os
 import pandas as pd
+try:
+    from pandas.core.index import MultiIndex
+except AttributeError:
+    # using a newer version of pandas where MultiIndex has moved
+    from pandas import MultiIndex
 import meld.colfuncs
 
 CURRENT_PATH = os.path.dirname(__file__)
@@ -39,4 +44,4 @@ def test_inflate_cols():
     )
     example_df.columns = meld.colfuncs.inflate_cols(example_df, sep="_")
     # check the columns are MultiIndexed
-    assert isinstance(example_df.columns, pd.core.index.MultiIndex)
+    assert isinstance(example_df.columns, MultiIndex)
